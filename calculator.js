@@ -38,3 +38,7 @@ function operate(op1, op2, op) {
 let result = operate(operand1, operand2, operator);
 
 console.log(result);
+
+const buttons = document.getElementById('buttons');
+const allbuttons = document.querySelectorAll('button');
+const display = document.getElementById('display');
