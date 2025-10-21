@@ -60,6 +60,39 @@ function inputDigit(digit) {
     display.textContent = currentDisplayValue;
 }
 
+function handleEquals() {
+    if(firstOperand !== null && operatorValue !== null && waitingForNewInput === false) {
+
+        return result = currentDisplayValue;
+    }
+    firstOperand = null;
+    operatorValue = null;
+}
+
+function handleOperator() {
+    if(firstOperand !== null && operatorValue !== null && waitingForNewInput === false) {
+
+        return result = currentDisplayValue;
+    }
+    currentDisplayValue = firstOperand;
+    operatorValue = buttonValue;
+    waitingForNewInput = true;
+}
+
+function clearCalculator() {
+    currentDisplayValue = '0';
+    firstOperand = null;
+    operatorValue = null;
+    waitingForNewInput = false;
+    updateDisplay(currentDisplayValue);
+}
+
+function updateDisplay() {
+    if (result === Number() && result.length > 9) {
+        toFixed(Number());
+    }
+}
+
 allButtons.forEach(button => {
     const buttonValue = button.textContent;
     const buttonId = button.id;
