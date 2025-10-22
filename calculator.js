@@ -19,6 +19,10 @@ let operand2 = 5;
 let operator = '+';
 
 function operate(op1, op2, op) {
+    if (op === '/' && op2 ==='0') {
+        return "Zero Division Error";
+    }
+    
     let calculateResult;
     if (op === '+') {
         calculateResult = add(op1, op2);
@@ -28,10 +32,8 @@ function operate(op1, op2, op) {
         calculateResult = multiply(op1, op2);
     } else if (op === '/') {
         calculateResult = divide(op1, op2);
-        if (op2 === 0) {
-            return "Error: Cannot divide by zero";
-        }
-    } 
+    }
+
     return calculateResult;
 }
 
@@ -61,21 +63,41 @@ function inputDigit(digit) {
 }
 
 function handleEquals() {
-    if(firstOperand !== null && operatorValue !== null && waitingForNewInput === false) {
+    if(firstOperand === null || operatorValue === null || waitingForNewInput === true) {
 
-        return result = currentDisplayValue;
+        return;
     }
+    const secondOperand = praseFloat(currentDisplayValue);
+    const result = operate(firstOperand, secondOperand, operatorValue);
+    if (result === "Zero Division Error") {
+        updateDisplay(result);
+        clearCalculator();
+        return;
+    }
+    updateDisplay(result);
+
     firstOperand = null;
     operatorValue = null;
+    waitingForNewInput = false;
 }
 
-function handleOperator() {
-    if(firstOperand !== null && operatorValue !== null && waitingForNewInput === false) {
+function handleOperator(nextOperator) {
+    if (firstOperand === null) {
+        firstOperand = inputValue;
+    } else if (operatorValue && !waitingForNewInput) {
+        const result = operate(firstOperand, inputValue, operatorValue);
 
-        return result = currentDisplayValue;
+        if (result === "Zero Division Error") {
+            updateDisplay(result);
+            clearCalculator();
+            return;
+        }
+
+        firstOperand = result;
+        updateDisplay(result);
     }
-    currentDisplayValue = firstOperand;
-    operatorValue = buttonValue;
+
+    operatorValue = nextOperator;
     waitingForNewInput = true;
 }
 
@@ -87,26 +109,48 @@ function clearCalculator() {
     updateDisplay(currentDisplayValue);
 }
 
+const MAX_DIGITS = 9;
 function updateDisplay() {
-    if (result === Number() && result.length > 9) {
-        toFixed(Number());
+    if (result === "Zero Division Error") {
+        display.textContent = "OMG";
+        return;
     }
+    let displayString = String(value);
+
+    if (displayString.length > MAX_DIGITS) {
+        const num = parseFloat(value);
+        let roundString = num.toPrecision(MAX_DIGITS).replace(/\.?0+$/, '');
+
+        displayString = roundString;
+    }
+
+    currentDisplayValue = displayString;
+    display.textContent = displayString;
 }
 
 allButtons.forEach(button => {
     const buttonValue = button.textContent;
     const buttonId = button.id;
-
-    button.addEventListener('click', () => {
-
-        if (!isNaN(parseFloat(buttonValue)) && buttonValue != '.') {
-            inputDigit(buttonValue);
-        } else if (['add', 'subtract', 'multiply', 'divide'].includes(buttonId)) {
-            firstOperand = parseFloat(currentDisplayValue);
-            operatorValue = buttonValue;
-            waitingForNewInput = true;
-        }
     
+    const operatorMap = {
+        'add': '+',
+        'subtract': '-',
+        'multiply': '*',
+        'divide': '/'
+    };
+    
+    button.addEventListener('click' () => {
+        const operatorSymbol = operatorMap[buttonID];
+
+        if (!isNaN(parseFloat(buttonValue)) && buttonValue !== '.') {
+            inputDigit(buttonValue);
+        } if(operatorSymbol) {
+            handleOperator(operatorSymbol);
+        } else if(buttonId === 'equals') {
+            handleEquals();
+        } else if(buttonId === 'clear') {
+            clearCalculator();
+        }
     });
 });
 
