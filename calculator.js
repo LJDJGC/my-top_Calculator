@@ -37,8 +37,6 @@ function operate(op1, op2, op) {
     return calculateResult;
 }
 
-let result = operate(operand1, operand2, operator);
-
 console.log(result);
 
 const buttons = document.getElementById('buttons');
@@ -67,7 +65,7 @@ function handleEquals() {
 
         return;
     }
-    const secondOperand = praseFloat(currentDisplayValue);
+    const secondOperand = parseFloat(currentDisplayValue);
     const result = operate(firstOperand, secondOperand, operatorValue);
     if (result === "Zero Division Error") {
         updateDisplay(result);
@@ -83,7 +81,7 @@ function handleEquals() {
 
 function handleOperator(nextOperator) {
     if (firstOperand === null) {
-        firstOperand = inputValue;
+        firstOperand = parseFloat(currentDisplayValue);
     } else if (operatorValue && !waitingForNewInput) {
         const result = operate(firstOperand, inputValue, operatorValue);
 
@@ -128,6 +126,10 @@ function updateDisplay() {
     display.textContent = displayString;
 }
 
+function inputPeriod() {
+    
+}
+
 allButtons.forEach(button => {
     const buttonValue = button.textContent;
     const buttonId = button.id;
@@ -138,8 +140,8 @@ allButtons.forEach(button => {
         'multiply': '*',
         'divide': '/'
     };
-    
-    button.addEventListener('click' () => {
+
+    button.addEventListener('click', () => {
         const operatorSymbol = operatorMap[buttonID];
 
         if (!isNaN(parseFloat(buttonValue)) && buttonValue !== '.') {
@@ -153,4 +155,5 @@ allButtons.forEach(button => {
         }
     });
 });
+
 
