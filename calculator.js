@@ -60,7 +60,7 @@ function inputDigit(digit) {
     display.textContent = currentDisplayValue;
 }
 
-function handleEquals() {
+function handleEqual() {
     if(firstOperand === null || operatorValue === null || waitingForNewInput === true) {
 
         return;
@@ -142,14 +142,14 @@ allButtons.forEach(button => {
     };
 
     button.addEventListener('click', () => {
-        const operatorSymbol = operatorMap[buttonID];
+        const operatorSymbol = operatorMap[buttonId];
 
         if (!isNaN(parseFloat(buttonValue)) && buttonValue !== '.') {
             inputDigit(buttonValue);
         } if(operatorSymbol) {
             handleOperator(operatorSymbol);
-        } else if(buttonId === 'equals') {
-            handleEquals();
+        } else if(buttonId === 'equal') {
+            handleEqual();
         } else if(buttonId === 'clear') {
             clearCalculator();
         }
