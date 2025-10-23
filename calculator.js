@@ -14,10 +14,6 @@ function divide(a, b) {
     return a / b;
 }
 
-let operand1 = 3;
-let operand2 = 5;
-let operator = '+';
-
 function operate(op1, op2, op) {
     if (op === '/' && op2 ==='0') {
         return "Zero Division Error";
@@ -36,8 +32,6 @@ function operate(op1, op2, op) {
 
     return calculateResult;
 }
-
-console.log(result);
 
 const buttons = document.getElementById('buttons');
 const allButtons = document.querySelectorAll('button');
@@ -83,7 +77,7 @@ function handleOperator(nextOperator) {
     if (firstOperand === null) {
         firstOperand = parseFloat(currentDisplayValue);
     } else if (operatorValue && !waitingForNewInput) {
-        const result = operate(firstOperand, inputValue, operatorValue);
+        const result = operate(firstOperand, parseFloat(currentDisplayValue), operatorValue);
 
         if (result === "Zero Division Error") {
             updateDisplay(result);
@@ -108,15 +102,15 @@ function clearCalculator() {
 }
 
 const MAX_DIGITS = 9;
-function updateDisplay() {
-    if (result === "Zero Division Error") {
-        display.textContent = "OMG";
+function updateDisplay(value) {
+    if (value === "Zero Division Error") {
+        display.textContent = "OMG:(";
         return;
     }
+    let tempString = num.toPrecision(MAX_DIGITS + 1);
     let displayString = String(value);
 
-    if (displayString.length > MAX_DIGITS) {
-        const num = parseFloat(value);
+    if (tempString.length > String(num).length && String(num).includes('e') === false) {
         let roundString = num.toPrecision(MAX_DIGITS).replace(/\.?0+$/, '');
 
         displayString = roundString;
@@ -146,7 +140,7 @@ allButtons.forEach(button => {
 
         if (!isNaN(parseFloat(buttonValue)) && buttonValue !== '.') {
             inputDigit(buttonValue);
-        } if(operatorSymbol) {
+        } else if(operatorSymbol) {
             handleOperator(operatorSymbol);
         } else if(buttonId === 'equal') {
             handleEqual();
