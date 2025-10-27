@@ -15,7 +15,7 @@ function divide(a, b) {
 }
 
 function operate(op1, op2, op) {
-    if (op === '/' && op2 ==='0') {
+    if (op === '/' && op2 === 0) {
         return "Zero Division Error";
     }
     
@@ -45,7 +45,10 @@ let waitingForNewInput = false;
 
 
 function inputDigit(digit) {
-    if (currentDisplayValue === '0') {
+    if (waitingForNewInput) {
+        currentDisplayValue = digit;
+        waitingForNewInput = false;
+    } else if (currentDisplayValue === '0') {
         currentDisplayValue = digit;
     } else {
         currentDisplayValue += digit; 
@@ -105,15 +108,19 @@ const MAX_DIGITS = 9;
 function updateDisplay(value) {
     if (value === "Zero Division Error") {
         display.textContent = "OMG:(";
+        currentDisplayValue = "0";
         return;
     }
-    let tempString = num.toPrecision(MAX_DIGITS + 1);
+
     let displayString = String(value);
 
-    if (tempString.length > String(num).length && String(num).includes('e') === false) {
-        let roundString = num.toPrecision(MAX_DIGITS).replace(/\.?0+$/, '');
+    if (displayString.length > MAX_DIGITS && !displayString.includes('e')) {
+        displayString = Number(value).toPrecision(MAX_DIGITS);
+        displayString = displayString.replace(/\.?0+$/, '');
+    }
 
-        displayString = roundString;
+    if (displayString.length > MAX_DIGITS && displayString.includes('e')) {
+
     }
 
     currentDisplayValue = displayString;
