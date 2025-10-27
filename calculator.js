@@ -121,7 +121,10 @@ function updateDisplay(value) {
 }
 
 function inputPeriod() {
-    
+    if (currentDisplayValue.includes('.')=== false) {
+        currentDisplayValue += '.';
+        display.textContent = currentDisplayValue;
+    }
 }
 
 allButtons.forEach(button => {
@@ -146,6 +149,8 @@ allButtons.forEach(button => {
             handleEqual();
         } else if(buttonId === 'clear') {
             clearCalculator();
+        } else if(buttonId === 'period') {
+            inputPeriod();
         }
     });
 });
