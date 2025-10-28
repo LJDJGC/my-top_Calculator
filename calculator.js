@@ -134,6 +134,15 @@ function inputPeriod() {
     }
 }
 
+function backSpace() {
+    currentDisplayValue.slice(-1);
+    if (clearCalculator === '') {
+        updateDisplay = '0';
+    }
+
+    updateDisplay();
+}
+
 allButtons.forEach(button => {
     const buttonValue = button.textContent;
     const buttonId = button.id;
@@ -160,6 +169,22 @@ allButtons.forEach(button => {
             inputPeriod();
         }
     });
+});
+
+document.addEventListener('keydown', (e) => {
+    if (KeyboardEvent.key === '0' || KeyboardEvent.key === '1' || KeyboardEvent.key === '2' ||  KeyboardEvent.key === '3' || KeyboardEvent.key === '4' || KeyboardEvent.key === '5' || KeyboardEvent.key === '6' || KeyboardEvent.key === '7' || KeyboardEvent.key === '8' || KeyboardEvent.key === '9') {
+        inputDigit();
+    } else if (KeyboardEvent.key === '+' || KeyboardEvent.key === '-' || KeyboardEvent.key === '*' || KeyboardEvent.key === '/') {
+        handleOperator();
+    } else if (KeyboardEvent.key === 'Enter') {
+        handleEqual();
+    } else if (KeyboardEvent.key === 'Escape' || KeyboardEvent.key === 'c') {
+        clearCalculator();
+    } else if (KeyboardEvent.key === 'Backspace') {
+        backSpace();
+    } else if (KeyboardEvent.key === '.') {
+        inputPeriod();
+    }
 });
 
 
