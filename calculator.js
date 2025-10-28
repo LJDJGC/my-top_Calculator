@@ -135,12 +135,12 @@ function inputPeriod() {
 }
 
 function backSpace() {
-    currentDisplayValue.slice(-1);
-    if (clearCalculator === '') {
-        updateDisplay = '0';
+    currentDisplayValue = currentDisplayValue.slice(0, -1);
+    if (currentDisplayValue === '' || currentDisplayValue === '-') {
+        currentDisplayValue = '0';
     }
 
-    updateDisplay();
+    updateDisplay(currentDisplayValue);
 }
 
 allButtons.forEach(button => {
@@ -167,22 +167,28 @@ allButtons.forEach(button => {
             clearCalculator();
         } else if(buttonId === 'period') {
             inputPeriod();
+        } else if (buttonId === 'backspace') {
+            backSpace();
         }
     });
 });
 
 document.addEventListener('keydown', (e) => {
-    if (KeyboardEvent.key === '0' || KeyboardEvent.key === '1' || KeyboardEvent.key === '2' ||  KeyboardEvent.key === '3' || KeyboardEvent.key === '4' || KeyboardEvent.key === '5' || KeyboardEvent.key === '6' || KeyboardEvent.key === '7' || KeyboardEvent.key === '8' || KeyboardEvent.key === '9') {
-        inputDigit();
-    } else if (KeyboardEvent.key === '+' || KeyboardEvent.key === '-' || KeyboardEvent.key === '*' || KeyboardEvent.key === '/') {
-        handleOperator();
-    } else if (KeyboardEvent.key === 'Enter') {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+    }
+
+    if (e.key >= '0' && e.key <= '9') {
+        inputDigit(e.key);
+    } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+        handleOperator(e.key);
+    } else if (e.key === 'Enter') {
         handleEqual();
-    } else if (KeyboardEvent.key === 'Escape' || KeyboardEvent.key === 'c') {
+    } else if (e.key === 'Escape' || e.key === 'c') {
         clearCalculator();
-    } else if (KeyboardEvent.key === 'Backspace') {
+    } else if (e.key === 'Backspace') {
         backSpace();
-    } else if (KeyboardEvent.key === '.') {
+    } else if (e.key === '.') {
         inputPeriod();
     }
 });
