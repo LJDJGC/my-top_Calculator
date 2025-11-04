@@ -11,24 +11,38 @@
     <div id="calculator">
         <div id="display">0</div>
         <div id="buttons">
-            <button id="zero" class="btn-num">0</button>
-            <button id="one" class="btn-num">1</button>
-            <button id="two" class="btn-num">2</button>
-            <button id="three" class="btn-num">3</button>
-            <button id="four" class="btn-num">4</button>
-            <button id="five" class="btn-num">5</button>
-            <button id="six" class="btn-num">6</button>
-            <button id="seven" class="btn-num">7</button>
-            <button id="eight" class="btn-num">8</button>
-            <button id="nine" class="btn-num">9</button>
+            <div class="first-row">
+                <button id="backspace" class="btn-func">←</button>
+                <button id="clear" class="btn-func">C</button>
+                <button id="divide" class="btn-op">÷</button>
+            </div>
+            <div class="second-row">
+                <button id="seven" class="btn-num">7</button>
+                <button id="eight" class="btn-num">8</button>
+                <button id="nine" class="btn-num">9</button>
+                <button id="multiply" class="btn-op">×</button>
+            </div>
+            <div class="third-row">
+                <button id="four" class="btn-num">4</button>
+                <button id="five" class="btn-num">5</button>
+                <button id="six" class="btn-num">6</button>
+                <button id="subtract" class="btn-op">-</button>
+            </div>
+            <div class="forth-row">
+                <button id="one" class="btn-num">1</button>
+                <button id="two" class="btn-num">2</button>
+                <button id="three" class="btn-num">3</button>
+                <button id="add" class="btn-op">+</button>
+            </div>
+
+            <div class="fifth-row">
+            <button id="zero" class="btn-num bottom" >0</button>
             <button id="period" class="btn-num">.</button>
-            <button id="add" class="btn-op">+</button>
-            <button id="subtract" class="btn-op">-</button>
-            <button id="multiply" class="btn-op">×</button>
-            <button id="divide" class="btn-op">÷</button>
-            <button id="equal" class="btn-op">=</button>
-            <button id="clear" class="btn-func">C</button>
-            <button id="backspace" class="btn-func">←</button>
+            <button id="equal" class="btn-op bottom">=</button>
+            </div>
+            
+            
+            
         </div>
     </div>
     <script src = "calculator.js"></script>
